@@ -19,20 +19,20 @@
 
 ## Install
 
-```
+```bash
 pip install aify
 ```
 
 ## Run your AI apps:
 
 Create a directory for apps:
-```
+```bash
 mkdir ./apps
 cd ./apps
 ```
 
 Run:
-```
+```bash
 aify run
 ```
 
@@ -45,7 +45,7 @@ Create a YAML file: **chatbot.yaml**
 
 Paste this content:
 
-```
+```yaml
 title: Chatbot
 
 model:
