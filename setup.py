@@ -1,5 +1,9 @@
 # coding: utf-8
 
+"""
+    aify
+"""
+
 import os
 import sys
 import re
@@ -27,10 +31,16 @@ with open(os.path.join(here, 'requirements.txt')) as f:
     for r in [x.strip() for x in f.readlines()]:
         if r != '':
             install_requires.append(r)
-print(install_requires)
+
 setup(
     name='aify',
     version=version,
+    description="aify is an AI-native application framework and runtime",
+    author_email="shenggong.wang@gmail.com",
+    url="https://github.com/shellc/aify",
+    keywords=["AI-Native", "LLM", "aify", "chatbot"],
+    long_description_content_type="text/markdown",
+    long_description=read("README.md"),
     packages=find_packages(),
     package_data={
         'webui': ['**/*']
