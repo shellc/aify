@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="shellc" /><link rel="canonical" href="https://aify.run/getting_started.html" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>Getting started - aify</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Getting started";
+        var mkdocs_page_input_path = "getting_started.md";
+        var mkdocs_page_url = "/getting_started.html";
+      </script>
+    
+    <script src="js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="." class="icon icon-home"> aify
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="getting_started.html">Getting started</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#create-your-fist-app">Create your fist app</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#play-with-your-ai-app">Play with your AI app</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#aify-is-not-a-chatbot">aify is not a chatbot</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="enhance_with_python.html">Enhance with Python</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="rest_api.html">RESTful API</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">aify</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
+      <li>Getting started</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/shellc/aify/blob/main/docs/getting_started.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="getting-started">Getting started</h1>
+<p>Welcome to Aify, the AI-native application framework and runtime that allows you to ship your AI applications in seconds! With Aify, you can easily build and deploy AI-powered applications using a simple YAML file. In this guide, we will walk you through the steps to get started with Aify and create your first AI application.</p>
+<h2 id="installation">Installation</h2>
+<p>To begin, make sure you have the following prerequisites installed on your system:</p>
+<ul>
+<li>Python 3.8 or higher</li>
+<li>Pip package manager</li>
+</ul>
+<p>Once you have the prerequisites, you can install Aify by running the following command in your terminal:</p>
+<pre><code class="language-bash">pip install aify
+</code></pre>
+<h2 id="create-your-fist-app">Create your fist app</h2>
+<p>You need to prepare a directory for your applications:</p>
+<pre><code class="language-bash">mkdir ./apps
+</code></pre>
+<p>Now you can start the aify service and then access <a href="http://localhost:2000">http://localhost:2000</a> using a browser, and aify will greet you.</p>
+<pre><code class="language-bash">aify run ./apps
+</code></pre>
+<p><img alt="aify screenshot" src="assets/images/screenshots/aify_webui_new_start_screenshot.png" /></p>
+<p>Now it's just a blank application, you can't use it for anything. Next, we will create a chatbot.</p>
+<p>Creating a YAML file aify uses a YAML file to define your AI application. This file contains all the necessary configurations and settings for your application. Here's an example of a basic YAML file:</p>
+<pre><code class="language-yaml">title: Chatbot
+
+model:
+  vendor: openai
+  name: gpt-3.5-turbo
+  params:
+    api_key: &lt;YOUR_OPENAI_API_KEY&gt;
+
+prompt: |
+  {{#system~}}
+  You are a helpful and terse assistant.
+  {{~/system}}
+
+  {{#each (memory.read program_name session_id n=3)}}
+  {{~#if this.role == 'user'}}
+  {{#user~}}
+  {{this.content}}
+  {{~/user}}
+  {{/if~}}
+  {{~#if this.role == 'assistant'}}
+  {{#assistant~}}
+  {{this.content}}
+  {{~/assistant}}
+  {{/if~}}
+  {{~/each}}
+
+  {{#user~}}
+  {{prompt}}
+  {{memory.save program_name session_id 'user' prompt}}
+  {{~/user}}
+
+  {{#assistant~}}
+  {{gen 'answer' temperature=0 max_tokens=2000}}
+  {{memory.save program_name session_id 'assistant' answer}}
+  {{~/assistant}}
+
+variables:
+  - name: prompt
+    type: input
+  - name: answer
+    type: output
+</code></pre>
+<p>Here are some simple explanations about this YAML file:</p>
+<ul>
+<li>The <strong><em>title</em></strong> represents the name of this application.</li>
+<li>The <strong><em>model</em></strong> section defines the AI model used by this application and the runtime parameters required by the model.</li>
+<li>The <strong><em>prompt</em></strong> section is used to drive the application's execution. Aify uses the guidance software package provided by Microsoft to drive the execution of the AI program. Guidance provides a way to operate as a Chain of Thought. Since guidance uses the Handlebars template system, the format of this section is actually a Handlebars template.The prompt section contains some helper functions that allow the AI model to dynamically change its runtime behavior, helping us achieve more complex functionality. These functions are built-in to aify, but you can also write your own helper functions in Python to accomplish specific tasks.<ul>
+<li>The terms "system," "user," and "assistant" are used to define the roles in an LLM-based chat task.</li>
+<li>"memory.read" and "memory.write" are built-in helper functions in Aify, used to save and load the conversation history of users and AI.</li>
+<li>"each" and "if" are branch control statements provided by Handlebars.</li>
+<li>"gen" is the function provided by "guidance" to indicate the execution of LLM generation tasks.</li>
+</ul>
+</li>
+<li>The <strong><em>variables</em></strong> section defines the input and output variables of the application, which are used for external systems to access the data generated by AI through an API.</li>
+</ul>
+<h2 id="play-with-your-ai-app">Play with your AI app</h2>
+<p>Now go back to your browser and refresh the page. You will see the application you just created. You can have some conversations with it, just like ChatGPT.</p>
+<p><img alt="aify screenshot" src="assets/images/screenshots/aify_webui_new_start_1_screenshot.png" /></p>
+<h2 id="aify-is-not-a-chatbot">aify is not a chatbot</h2>
+<p>Although aify provides a chatbot interface, its main purpose is not to provide a replacement for ChatGPT or a competitive conversation application.</p>
+<p>The chatbot UI is only for convenient debugging of AI applications. Of course, you can indeed use it as a chatbot for daily use.</p>
+<p>The main goal of aify is to provide an efficient framework for developing and deploying AI applications.</p>
+<p>If your goal is to develop your own complex AI applications, you should pay more attention to the APIs and extension mechanisms provided by aify.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="enhance_with_python.html" class="btn btn-neutral float-right" title="Enhance with Python">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/shellc/aify" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+      <span><a href="enhance_with_python.html" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme_extra.js" defer></script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
