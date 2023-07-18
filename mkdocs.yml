@@ -8,6 +8,8 @@ theme:
   name: readthedocs
   include_homepage_in_sidebar: false
   navigation_depth: 2
+  analytics:
+    gtag: G-3QEZ4BHZYC
 
 nav:
   - getting_started.md
