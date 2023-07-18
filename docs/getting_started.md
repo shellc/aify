@@ -16,7 +16,7 @@ Once you have the prerequisites, you can install Aify by running the following c
 pip install aify
 ```
 
-## Create your fist app
+## Create your first app
 
 You need to prepare a directory for your applications:
 

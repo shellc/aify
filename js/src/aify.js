@@ -18,13 +18,13 @@ const { Meta } = Card
 let welcome_message = `
 # Welcome to aify.run
 
-##### Write a YAML file to ship your AI application in seconds
+##### Build your AI-native application in seconds.
 
-🛠️ AI-native application framework and runtime, simply write a YAML file
+🛠️ AI-native application framework and runtime. Simply write a YAML file.
 
-🤖 Ready-to-use AI chatbot UI
+🤖 Ready-to-use AI chatbot UI.
 
-🚀 [Getting started: create your first AI application](https://docs.aify.run/getting_started.html)
+🚀 [Getting started: Create your first AI application](https://docs.aify.run/getting_started.html)
 `
 
 const Aify = (props) => {

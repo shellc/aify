@@ -1,10 +1,10 @@
 # Home
 
-** Write a YAML file to ship your AI application in seconds **
+** Build your AI-native application in seconds. **
 
-🛠️ AI-native application framework and runtime, simply write a YAML file
+🛠️ AI-native application framework and runtime. Simply write a YAML file.
 
-🤖 Ready-to-use AI chatbot UI
+🤖 Ready-to-use AI chatbot UI.
 
 ## Screenshots
 
