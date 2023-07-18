@@ -81,3 +81,7 @@ variables:
 Refresh your browser, and you will get your chatbot. Now, you can talk to it.
 
 📝 More examples: https://github.com/shellc/aify/tree/main/examples
+
+### Webui screenshot
+
+![Webui screenshot](./docs/assets/images/screenshots/aify_webui_screenshot.png)
