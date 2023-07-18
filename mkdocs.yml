@@ -1,0 +1,15 @@
+site_name: aify
+site_url: https://aify.run
+repo_url: https://github.com/shellc/aify
+edit_uri: blob/main/docs/
+site_author: shellc
+
+theme:
+  name: readthedocs
+  include_homepage_in_sidebar: false
+  navigation_depth: 2
+
+nav:
+  - getting_started.md
+  - enhance_with_python.md
+  - rest_api.md
