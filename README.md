@@ -1,6 +1,6 @@
-## aify.run
+# aify
 
-#### Write a YAML file to ship your AI application in seconds
+### Write a YAML file to ship your AI application in seconds
 
 🛠️ AI-native application framework and runtime, simply write a YAML file
 
@@ -17,13 +17,13 @@
 * Authorization
 * Deploy to cloud providers
 
-### Install
+## Install
 
 ```
 pip install aify
 ```
 
-### Run your AI apps:
+## Run your AI apps:
 
 Create a directory for apps:
 ```
@@ -39,7 +39,7 @@ aify run
 Open your web browser and visit: [http://127.0.0.1:2000](http://127.0.0.1:2000)
 
 
-### Create a chatbot
+## Create a chatbot
 
 Create a YAML file: **chatbot.yaml**
 
@@ -93,6 +93,6 @@ Refresh your browser, and you will get your chatbot. Now, you can talk to it.
 
 📝 More examples: https://github.com/shellc/aify/tree/main/examples
 
-### Webui screenshot
+## Webui screenshot
 
 ![Webui screenshot](./docs/assets/images/screenshots/aify_webui_screenshot.png)
