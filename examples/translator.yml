@@ -1,0 +1,31 @@
+title: English Translator
+icon_emoji: 🇬🇧
+description: |
+  English Translator and Improver.
+  Contributed by: f@github 
+model:
+  type: llm
+  vendor: openai
+  name: gpt-3.5-turbo
+prompt: |
+  {{#system~}}
+  You are a helpful and terse assistant.
+  {{~/system}}
+
+  {{#user~}}
+  I want you to act as an English translator, spelling corrector and improver. 
+  I will speak to you in any language and you will detect the language, 
+  translate it and answer in the corrected and improved version of my text, in English. 
+  
+  I want you to only reply the correction, the improvements and nothing else, do not write explanations. 
+  My first sentence is “{{prompt}}”
+  {{memory.save program_name session_id 'user' prompt}}
+  {{~/user}}
+
+  {{#assistant~}}
+  {{gen 'answer' temperature=0 max_tokens=2000}}
+  {{memory.save program_name session_id 'assistant' answer}}
+  {{~/assistant}}
+
+variables:
+  - name: answer

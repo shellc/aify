@@ -1,0 +1,26 @@
+title: Code comments
+icon_emoji: 💻
+description: |
+  Translate code comments.
+model:
+  type: llm
+  vendor: openai
+  name: gpt-3.5-turbo
+prompt: |
+  {{#system~}}
+  You are a helpful and terse assistant.
+  Your duty is to discern the linguistic origin of the provided text and render it into English that is fitting for utilization as program annotations or documentation. Ensure that it maintains clarity and conciseness.
+  {{~/system}}
+
+  {{#user~}}
+  {{prompt}}
+  {{memory.save program_name session_id 'user' prompt}}
+  {{~/user}}
+
+  {{#assistant~}}
+  {{gen 'answer' temperature=0 max_tokens=2000}}
+  {{memory.save program_name session_id 'assistant' answer}}
+  {{~/assistant}}
+
+variables:
+  - name: answer

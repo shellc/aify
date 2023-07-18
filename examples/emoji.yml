@@ -1,0 +1,25 @@
+title: Best emoji
+description: Find the top 10 emojis that best match the content entered by the user. 
+icon_emoji: 😈
+model:
+  type: llm
+  vendor: openai
+  name: gpt-3.5-turbo
+prompt: |
+  {{#system~}}
+  You are a helpful and terse assistant.
+
+  Find the top 10 emojis that best match the content entered by the user. Output these emojis as a list with short description.
+  {{~/system}}
+
+  {{#user~}}
+  {{prompt}}
+  {{memory.save program_name session_id 'user' prompt}}
+  {{~/user}}
+
+  {{#assistant~}}
+  {{gen 'answer' temperature=0 max_tokens=2000}}
+  {{memory.save program_name session_id 'assistant' answer}}
+  {{~/assistant}}
+variables:
+  - name: answer
