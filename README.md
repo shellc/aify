@@ -6,6 +6,17 @@
 
 🤖 Ready-to-use AI chatbot UI
 
+**Dependencies**
+
+* [microsoft/guidance](https://github.com/microsoft/guidance) as the core prompt engine
+* [Uvicorn](https://www.uvicorn.org/), [Starlette](https://www.starlette.io/), [FastAPI](https://fastapi.tiangolo.com/) as the server
+
+**TODO**
+
+* API documentation
+* Authorization
+* Deploy to cloud providers
+
 ### Install
 
 ```
