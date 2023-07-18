@@ -45,7 +45,7 @@ async def execute_program(request: Request, name: str, session_id: str):
 
     # Server Sent Events
     sse = 'sse' in request.query_params
-    print(program.output_variable_names)
+
     # https://github.com/microsoft/guidance/discussions/129
     async def _aiter():
         pos = dict([(vname, 0) for vname in program.output_variable_names])
