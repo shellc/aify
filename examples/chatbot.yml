@@ -13,8 +13,8 @@ model:
   #  api_key: sk-
   #  api_base: https://
 
-modules:
-  helpers: helpers
+#modules:
+#  helpers: helpers
 
 prompt: |
   {{#system~}}
@@ -47,9 +47,5 @@ prompt: |
 variables:
   - name: prompt
     type: input
-    date_type: string
-    max_length: 200
-    required: true
   - name: answer
     type: output
-    data_type: string
