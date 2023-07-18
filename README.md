@@ -1,6 +1,8 @@
-# aify
+# 🚀 aify
 
 ### Write a YAML file to ship your AI application in seconds
+
+[Home](https://aify.run/) | [Documentation](https://docs.aify.run/) | [Feedback](https://github.com/shellc/aify/issues)
 
 🛠️ AI-native application framework and runtime, simply write a YAML file
 
