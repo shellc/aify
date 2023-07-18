@@ -51,7 +51,7 @@ Now you can start the aify service and then access [http://localhost:2000](http:
 aify run ./apps
 ```
 
-![aify screenshot](./docs/assets/images/screenshots/aify_webui_new_start_screenshot.png)
+![aify screenshot](https://docs.aify.run/assets/images/screenshots/aify_webui_new_start_screenshot.png)
 
 Now it's just a blank application, you can't use it for anything. Next, we will create a chatbot.
 
@@ -116,7 +116,7 @@ Here are some simple explanations about this YAML file:
 
 Now go back to your browser and refresh the page. You will see the application you just created. You can have some conversations with it, just like ChatGPT.
 
-![aify screenshot](./docs/assets/images/screenshots/aify_webui_new_start_1_screenshot.png)
+![aify screenshot](https://docs.aify.run/assets/images/screenshots/aify_webui_new_start_1_screenshot.png)
 
 ### aify is not a chatbot
 
@@ -132,4 +132,4 @@ If your goal is to develop your own complex AI applications, you should pay more
 
 ### Webui screenshot
 
-![Webui screenshot](./docs/assets/images/screenshots/aify_webui_screenshot.png)
+![Webui screenshot](https://docs.aify.run/assets/images/screenshots/aify_webui_screenshot.png)
