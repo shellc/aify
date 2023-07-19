@@ -13,5 +13,10 @@ theme:
 
 nav:
   - getting_started.md
+  - dive_into_apps.md
+  - app_template.md
   - enhance_with_python.md
   - rest_api.md
+  - Examples:
+    - examples/llm_generation.md
+    - examples/chatbot.md
