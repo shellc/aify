@@ -24,7 +24,7 @@ let welcome_message = `
 
 🤖 Ready-to-use AI chatbot UI.
 
-🚀 [Getting started: Create your first AI application](https://docs.aify.run/getting_started.html)
+🚀 [Getting started: Create your first AI application](https://docs.aify.run/getting_started/)
 `
 
 const Aify = (props) => {
