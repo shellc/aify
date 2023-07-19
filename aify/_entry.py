@@ -17,6 +17,13 @@ from ._web_template import render
 api = FastAPI()
 
 def get_program(name: str) -> _program.Program:
+    """A program is an application defined by the user.
+
+    Parameters
+    ----------
+    name : string
+        The name of the program, typically the filename of the user-defined application template.
+    """
     program = None
     try:
         program = _program.get(name)
@@ -28,6 +35,7 @@ def get_program(name: str) -> _program.Program:
 
 @api.put('/apps/{name}/{session_id}')
 async def execute_program(request: Request, name: str, session_id: str):
+    """Execute the program identified by the name."""
     program = get_program(name)
     
     kwargs = {}
@@ -43,13 +51,12 @@ async def execute_program(request: Request, name: str, session_id: str):
     if filter_variable and not (filter_variable in program.input_variable_names or filter_variable in program.output_variable_names):
         raise HTTPException(status_code=400, detail="invalid variable.")
 
-    # Server Sent Events
+    # Check if the Server-Sent Event enabled.
     sse = 'sse' in request.query_params
 
     # https://github.com/microsoft/guidance/discussions/129
     async def _aiter():
         pos = dict([(vname, 0) for vname in program.output_variable_names])
-        #pos = 0
         catched = False
 
         kwargs['stream'] = True
@@ -70,7 +77,6 @@ async def execute_program(request: Request, name: str, session_id: str):
                 else:
                     yield json.dumps(e)
             else:
-                #generated = t.text if not variable else t.get(variable)
                 for vname in program.output_variable_names:
 
                     if filter_variable and vname != filter_variable:
@@ -101,18 +107,20 @@ async def execute_program(request: Request, name: str, session_id: str):
     return StreamingResponse(it, headers={'Content-Type': content_type})
 
 @api.get('/apps/{name}/{session_id}/memories')
-async def get_memories(request: Request, name: str, session_id: str):
+async def get_memories(request: Request, name: str, session_id: str, limit=1000):
+    """Get the memory content of the specified application's current session."""
     memories = []
     program = get_program(name)
     memory = program.modules.get('memory')
     if memory:
-        m = memory.read(name, session_id, max_len=2040*1024, n=1000)
+        m = memory.read(name, session_id, max_len=2040*1024, n=limit)
         if m:
             memories = m
     return JSONResponse(memories)
 
 @api.get('/apps')
 async def list_apps(request: Request):
+    """List applications"""
     progs = []
     if len(_program.programs) == 0:
         _program.reload()
@@ -129,7 +137,21 @@ async def list_apps(request: Request):
 
 @api.get('/sessions')
 async def list_sessions(request: Request):
-    return JSONResponse(memory.sessions())
+    """List sessions"""
+    
+    sessions = []
+
+    progs = []
+    if len(_program.programs) == 0:
+        _program.reload()
+
+    for name, prog in _program.programs.items():
+        memory = prog.modules.get('memory')
+        sessions.extend(memory.sessions(name))
+
+    sessions = sorted(sessions, key=lambda x: x.get('last_modified'), reverse=True)
+
+    return JSONResponse(sessions)
 
 # Routes
 routes = [
@@ -150,7 +172,7 @@ routes = [
     )
 ]
 
-apps_static_dir = os.path.join(_env.get_apps_dir(), 'static')
+apps_static_dir = os.path.join(_env.apps_dir(), 'static')
 if os.path.exists(apps_static_dir):
     routes.append(Mount(
         '/apps/static',

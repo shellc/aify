@@ -39,6 +39,7 @@
   },
   "proxy": "http://127.0.0.1:2000",
   "devDependencies": {
+    "mini-css-extract-plugin": "^2.7.6",
     "react-app-rewire-multiple-entry": "^2.2.3",
     "react-app-rewired": "^2.2.1"
   }

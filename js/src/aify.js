@@ -125,7 +125,7 @@ const Aify = (props) => {
                                                 }}
                                                 style={{ width: '220px' }}
                                             >
-                                                {session.content}
+                                                {(session.latest && session.latest.length) > 0 ? session.latest[session.latest.length-1].content : ''}
                                             </Text>
                                         </Space>
                                     ) : null}

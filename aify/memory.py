@@ -1,17 +1,17 @@
 import os
 import glob
 import json
-from ._env import get_apps_dir
+from ._env import apps_dir
 
 def _memories_dirs():
-    apps_dir = get_apps_dir()
-    memories_dir = os.path.join(apps_dir, 'memories')
+    memories_dir = os.path.join(apps_dir(), 'memories')
     if not os.path.exists(memories_dir):
         os.mkdir(memories_dir)
 
     return memories_dir
 
 def save(program_name:str, session_id: str, role: str, content: str):
+    """Save memory for the specified session of the application."""
 
     prog_session_dir = os.path.join(_memories_dirs(), program_name)
     if not os.path.exists(prog_session_dir):
@@ -25,6 +25,7 @@ def save(program_name:str, session_id: str, role: str, content: str):
         f.write('\n')
 
 def read(program_name: str, session_id: str, n = 10, max_len = 4096):
+    """Read memories from the specified session of the application."""
     fname = os.path.join(_memories_dirs(), program_name, session_id)
     if not os.path.exists(fname):
         return []
@@ -47,21 +48,23 @@ def read(program_name: str, session_id: str, n = 10, max_len = 4096):
             pass
     return memories
 
-def sessions():
+def sessions(program_name: str):
+    """Get the session list of the specified application."""
     res = []
-    for f in sorted(glob.glob(os.path.join(_memories_dirs(), "*/*")), key=os.path.getmtime, reverse=True):
+    for f in glob.glob(os.path.join(_memories_dirs(), program_name, "*")):
+        mtime = os.path.getmtime(f)
         p = os.path.abspath(f).split('/')
-        program_name = p[-2]
         session_id = p[-1]
 
-        last_message = None
+        latest = []
         memories = read(program_name=program_name, session_id=session_id, n=1)
         if memories and len(memories) > 0:
-            last_message = memories[-1]['content']
+            latest = memories[-1:]
 
         res.append({
             'name': program_name,
             'session_id': session_id,
-            'content': last_message
+            'last_modified': mtime,
+            'latest': latest
         })
     return res

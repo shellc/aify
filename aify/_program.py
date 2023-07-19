@@ -14,6 +14,7 @@ from . import _env
 from ._error import AifyError
 from ._logging import logger
 
+
 class CompileError(AifyError):
     pass
 
@@ -22,6 +23,7 @@ class Program:
     """
     The Program class represents an executable program driven by a LLM.
     """
+
     def __init__(self, template: str) -> None:
         self._template = None
         self._runner = None
@@ -98,6 +100,7 @@ class Program:
             self._modules['embeddings'] = aify.embeddings
 
     def run(self, **kwargs):
+        """Run this program."""
         kwargs.update(self._modules)
         return self._runner(**kwargs)
 
@@ -112,10 +115,11 @@ class Program:
     @property
     def input_variable_names(self):
         return [x['name'] for x in self._input_variables]
-    
+
     @property
     def output_variable_names(self):
         return [x['name'] for x in self._output_variables]
+
 
 def _load_template(url: str):
     template = None
@@ -127,13 +131,16 @@ def _load_template(url: str):
 
     return template
 
+
 programs = {}
 
+
 def reload(apps_dir: str = None, skip_error=False):
+    """Load programs from the user's application directory."""
     global programs
 
     if not apps_dir:
-        apps_dir = _env.get_apps_dir()
+        apps_dir = _env.apps_dir()
 
     sys.path.append(apps_dir)
 
@@ -154,10 +161,12 @@ def reload(apps_dir: str = None, skip_error=False):
         programs[os.path.basename(f).split('.')[0]] = program
     return programs
 
+
 def get(name: str):
+    """Retrieve a specific program from the user's application directory."""
     global programs
     if name not in programs:
-        apps_dir = _env.get_apps_dir()
+        apps_dir = _env.apps_dir()
         if os.path.exists(os.path.join(apps_dir, f'{name}.yml')) or os.path.exists(os.path.join(apps_dir, f'{name}.yaml')):
             reload()
 
