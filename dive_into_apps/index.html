@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="shellc" /><link rel="canonical" href="https://aify.run/dive_into_apps/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Dive into apps - aify</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Dive into apps";
+        var mkdocs_page_input_path = "dive_into_apps.md";
+        var mkdocs_page_url = "/dive_into_apps/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-3QEZ4BHZYC"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-3QEZ4BHZYC');
+      </script>
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> aify
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../getting_started/">Getting started</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Dive into apps</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#directory-structure">Directory structure</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-environment-variables">Set environment variables</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#authorization">Authorization</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#memories">Memories</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#embeddings">Embeddings</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#helper-functions">Helper functions</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../app_template/">App template</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../enhance_with_python/">Enhance with Python</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../rest_api/">RESTful API</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Examples</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../examples/llm_generate/">LLM Generate</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../examples/chatbot/">Chatbot</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">aify</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
+      <li>Dive into apps</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/shellc/aify/blob/main/docs/dive_into_apps.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="dive-into-apps">Dive into apps</h1>
+<p>User apps are stored in a directory. The files that comprise the application program include YAML files, Python code, environment variables, authentication tokens, and other static resources(such as word embeddings).</p>
+<p>The directory also contains data generated during the program's execution</p>
+<h2 id="directory-structure">Directory structure</h2>
+<pre><code>your_apps_dir/
+ .evn
+ .tokens
+ your_app_1.yaml
+ your_app_2.yaml
+ memories/
+ embeddings/
+ static/
+ helpers.py
+</code></pre>
+<ul>
+<li>.env The file contains environment variable settings, such as OPENAI_API_KEY.</li>
+<li>.token The file contains authentication information for users and permissions, used for API authentication.</li>
+<li>your_app_*.yaml The file defines the application, and a folder can contain multiple applications.</li>
+<li>memories The folder is automatically generated during program execution and is used to store data generated by the program.</li>
+<li>embeddings The folder is used to store text embedding data, and the application performs similarity searches during runtime.</li>
+<li>static The folder stores static resources required by the application.</li>
+<li>helpers.py  is a collection of custom Python functions that can be invoked in the application. You can define multiple pypthon files and functions of any complexity.</li>
+</ul>
+<h2 id="set-environment-variables">Set environment variables</h2>
+<p>Example:</p>
+<pre><code>OPENAI_API_KEY=sk-YOUR_OPENAI_API_KEY
+OPENAI_API_BASE=https://YOU_OPENAI_API_BASE
+</code></pre>
+<h2 id="authorization">Authorization</h2>
+<p>Example:</p>
+<pre><code>YOUR_GENEREATED_TOKEN_STR_FOR_AUTH|username|write
+ANATHORE_TOKEN_STR|🦸🏻‍♀️|
+</code></pre>
+<p>The last column is for user permissions. "write" indicates that the user has write permission. Executing an application requires write permission, otherwise the user only has read permission.</p>
+<p>The ".tokens" file is not necessary. If there is no ".tokens" file in the application folder, it means that authentication is not required and all users can read and write anonymously.</p>
+<h2 id="memories">Memories</h2>
+<p>Chatbot applications typically need to save conversation context data. We refer to this data as "memories." You can also implement your own memory storage method. Aify is a highly scalable framework.</p>
+<h2 id="embeddings">Embeddings</h2>
+<p>The "embeddings" directory contains some CSV files that store word embeddings. It is used to retrieve data based on similarity during program execution, allowing the application to dynamically utilize external data. Similarly, you can also implement your own embedding retrieval method.</p>
+<h2 id="helper-functions">Helper functions</h2>
+<p>Helper functions is a collection of custom Python functions that can be invoked in the application. You can define multiple pypthon files and functions of any complexity.</p>
+<p>This can be used to enable communication between applications and external systems. For example, it allows for real-time access to a search engine's interface to retrieve data.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../getting_started/" class="btn btn-neutral float-left" title="Getting started"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../app_template/" class="btn btn-neutral float-right" title="App template">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/shellc/aify" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../getting_started/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../app_template/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
