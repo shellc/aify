@@ -4,12 +4,15 @@ import contextlib
 from starlette.applications import Starlette
 from starlette.routing import Mount, Route
 from starlette.staticfiles import StaticFiles
-from starlette.responses import JSONResponse, StreamingResponse
+from starlette.responses import JSONResponse, StreamingResponse, RedirectResponse
+from starlette.middleware import Middleware
+from starlette.middleware.authentication import AuthenticationMiddleware
+from starlette.authentication import requires
 from starlette.exceptions import HTTPException
 from fastapi import FastAPI, Request
 from . import _env
 from . import _program
-from . import memory
+from . import _auth
 from ._logging import logger
 from ._web_template import render
 
@@ -34,6 +37,7 @@ def get_program(name: str) -> _program.Program:
     return program
 
 @api.put('/apps/{name}/{session_id}')
+@requires(['authenticated', 'write'])
 async def execute_program(request: Request, name: str, session_id: str):
     """Execute the program identified by the name."""
     program = get_program(name)
@@ -107,6 +111,7 @@ async def execute_program(request: Request, name: str, session_id: str):
     return StreamingResponse(it, headers={'Content-Type': content_type})
 
 @api.get('/apps/{name}/{session_id}/memories')
+@requires(['authenticated'])
 async def get_memories(request: Request, name: str, session_id: str, limit=1000):
     """Get the memory content of the specified application's current session."""
     memories = []
@@ -119,6 +124,7 @@ async def get_memories(request: Request, name: str, session_id: str, limit=1000)
     return JSONResponse(memories)
 
 @api.get('/apps')
+@requires(['authenticated'])
 async def list_apps(request: Request):
     """List applications"""
     progs = []
@@ -136,6 +142,7 @@ async def list_apps(request: Request):
     return JSONResponse(progs)
 
 @api.get('/sessions')
+@requires(['authenticated'])
 async def list_sessions(request: Request):
     """List sessions"""
     
@@ -153,6 +160,19 @@ async def list_sessions(request: Request):
 
     return JSONResponse(sessions)
 
+async def auth(request: Request):
+    response = await render('auth.html')(request=request)
+    if request.method == 'POST':
+        next = request.query_params.get('next')
+        print(next)
+        if next:
+            response = RedirectResponse(next, status_code=302)
+        
+        async with request.form() as form:
+            token = form.get('token')
+            response.set_cookie('token', token, max_age=7*24*3600)
+    return response
+
 # Routes
 routes = [
     Mount(
@@ -168,7 +188,13 @@ routes = [
     Route(
         '/',
         name='home',
-        endpoint=render('index.html')
+        endpoint=requires(scopes=['authenticated'], redirect='auth')(render('index.html'))
+    ),
+    Route(
+        '/auth',
+        name='auth',
+        methods=['POST', 'GET'],
+        endpoint=auth
     )
 ]
 
@@ -180,8 +206,13 @@ if os.path.exists(apps_static_dir):
         app=StaticFiles(directory=apps_static_dir, check_dir=False),
     ))
 
+# Middlewares
+middleware = [
+    Middleware(AuthenticationMiddleware, backend=_auth.BasicAuthBackend())
+]
+
 @contextlib.asynccontextmanager
 async def lifespan(app):
     yield
 
-entry = Starlette(debug=True, routes=routes, lifespan=lifespan)
+entry = Starlette(debug=True, routes=routes, middleware=middleware, lifespan=lifespan)

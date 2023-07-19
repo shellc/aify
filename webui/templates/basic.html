@@ -6,18 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>aify.run</title>
+    <title>{% block title %}{% endblock title %}</title>
     <script defer src="/static/aify/aify.js"></script>
     <link href="/static/aify/aify.css" rel="stylesheet">
 </head>
 
 <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    {% block body %}{% endblock body %}
 </body>
-<script defer>
-    window.onload = function () {
-        aify.create('root');
-    }
-</script>
+
 </html>

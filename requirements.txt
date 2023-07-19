@@ -8,6 +8,7 @@ uvicorn
 starlette
 fastapi
 jinja2
+python-multipart
 
 python-dotenv
 watchfiles

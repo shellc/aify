@@ -1,0 +1,18 @@
+{% extends 'basic.html' %}
+
+{% block title %}Auth - aify{% endblock title %}
+
+{% block body %}
+
+<div class="conainer mx-auto mt-5">
+    <form class="row mx-auto pt-5" method="POST">
+        <div class="col-auto ms-auto">
+            <input name="token" type="password" class="form-control bg-light" style="width: 300px;" id="token" placeholder="Input your token to login">
+        </div>
+        <div class="col-auto me-auto">
+            <button type="submit" class="btn btn-primary mb-3">Login</button>
+        </div>
+    </form>
+</div>
+
+{% endblock body %}
