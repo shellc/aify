@@ -19,7 +19,7 @@
 * Memory storage: Local file / Google Cloud Datastore / User-defined
 * Embeddings: OpenAI / User-defined
 * Vector storage and search: Local CSV files, Pandas DataFrame and Numpy in memory / User-defined
-* Deployment: Local / Google Cloud App engine
+* Deployment: Local / [Google Cloud App engine](https://docs.aify.run/deploy_to_clouds/google_appengine/)
 * UI: Chatbot webui
 * API: RESTful API / Python
 
