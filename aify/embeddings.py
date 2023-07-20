@@ -21,14 +21,14 @@ def cosine_similarity(a, b):
 
 def search(collection_name: str, text: str, n=3):
     """Searches the specified collection."""
-    df = _load_collections(collection_name)
+    df = _load_collections(collection_name).copy(deep=False)
     embeds = embed(text)
-    df['similarities'] = df['embedding'].apply(
+    df['score'] = df['embedding'].apply(
         lambda x: cosine_similarity(x, embeds))
-    res = df.sort_values('similarities', ascending=False).head(
+    res = df.sort_values('score', ascending=False).head(
         n).drop(['embedding'], axis=1)
-    return res.values.tolist()
-
+    #return res.values.todict()
+    return res.to_json(orient="records", force_ascii=False, double_precision=4)
 
 def build_csv(from_file: str, to_file: str):
     """Builds word embeddings for a CSV file"""

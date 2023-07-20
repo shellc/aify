@@ -4,8 +4,10 @@ import openai
 
 def embed(text: str, model='text-embedding-ada-002'):
     """Generate embeddings."""
-    openai.api_key = os.environ["OPENAI_API_KEY"]
-    openai.api_base = os.environ["OPENAI_API_BASE"]
+    if "OPENAI_API_KEY" in os.environ:
+        openai.api_key = os.environ["OPENAI_API_KEY"]
+    if "OPENAI_API_BASE" in os.environ:
+        openai.api_base = os.environ["OPENAI_API_BASE"]
 
     return openai.Embedding.create(
         input=[text],
