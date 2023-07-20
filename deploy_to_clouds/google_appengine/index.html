@@ -108,12 +108,14 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="deploy-to-google-app-engine">Deploy to google app engine</h1>
-<p>You need to install and configure your Google Cloud CLI before deploying your apps to Google Cloud Engine. <a href="https://cloud.google.com/sdk/docs/install">https://cloud.google.com/sdk/docs/install</a></p>
+<p>You need to install and configure your Google Cloud CLI before deploying your apps to Google Cloud App Engine. <a href="https://cloud.google.com/sdk/docs/install">https://cloud.google.com/sdk/docs/install</a></p>
 <p>Examples: <a href="https://github.com/shellc/aify/tree/main/examples">https://github.com/shellc/aify/tree/main/examples</a></p>
 <pre><code>
 cd examples
 
 cp deploy-to-google-appengine/requirements.txt .
+
+gcloud app deploy ./deploy-to-google-appengine/index.yaml
 
 gcloud app deploy --appyaml ./deploy-to-google-appengine/app.yaml
 
@@ -130,6 +132,7 @@ modules:
   memory: $AIFY_MEMORY_STORAGE
 
 </code></pre>
+<p>Notice: Google Cloud App Engine does not support streaming responses, so aify does not either when it is deployed on Google Cloud App Engine. <a href="https://cloud.google.com/appengine/docs/standard/how-requests-are-handled?tab=python#streaming_responses">https://cloud.google.com/appengine/docs/standard/how-requests-are-handled?tab=python#streaming_responses</a></p>
               
             </div>
           </div><footer>
