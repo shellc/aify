@@ -1,5 +1,6 @@
 import os
 import json
+import importlib
 import contextlib
 from starlette.applications import Starlette
 from starlette.routing import Mount, Route
@@ -219,8 +220,14 @@ middleware = [
     Middleware(AuthenticationMiddleware, backend=_auth.BasicAuthBackend())
 ]
 
+def import_entry():
+    entry_py = os.path.join(_env.apps_dir(), 'entry.py')
+    if os.path.exists(entry_py):
+        importlib.import_module('entry')
+
 @contextlib.asynccontextmanager
 async def lifespan(app):
+    import_entry()
     yield
 
 entry = Starlette(debug=True, routes=routes, middleware=middleware, lifespan=lifespan)
