@@ -10,6 +10,8 @@ cd examples
 
 cp deploy-to-google-appengine/requirements.txt .
 
+gcloud app deploy ./deploy-to-google-appengine/index.yaml
+
 gcloud app deploy --appyaml ./deploy-to-google-appengine/app.yaml
 
 ```

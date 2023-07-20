@@ -22,8 +22,10 @@ def save(program_name: str, session_id: str, role: str, content: str) -> None:
         'created': time.time()
     }
 
-    entity = datastore.Entity(key=datastore_client.key(
-        'memories', program_name, session_id, uuid()))
+    entity = datastore.Entity(
+        key=datastore_client.key('memories', f'{program_name}_{session_id}', 'session_memories', uuid()),
+        exclude_from_indexes=("content",)
+        )
     entity.update(m)
     datastore_client.put(entity)
 
@@ -41,8 +43,8 @@ def save(program_name: str, session_id: str, role: str, content: str) -> None:
 
 def read(program_name: str, session_id: str, n=10, max_len=4096) -> List[Dict]:
     query = datastore_client.query(
-        kind=session_id, ancestor=datastore_client.key('memories', program_name))
-    # query.order = ["-created"]
+        kind='session_memories', ancestor=datastore_client.key('memories', f'{program_name}_{session_id}'))
+    query.order = ["-created"]
 
     memories = [x for x in query.fetch(limit=n)]
 

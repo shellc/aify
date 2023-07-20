@@ -1,0 +1,6 @@
+indexes:
+- kind: session_memories
+  ancestor: yes
+  properties:
+  - name: created
+    direction: desc
