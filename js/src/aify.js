@@ -36,6 +36,7 @@ const Aify = (props) => {
     const [currentSessionId, setCurrentSessionId] = useState(null);
     const [sessions, setSessions] = useState();
     const [welcomMessage, setWelcomeMessage] = useState();
+    const [user, setUser] = useState();
 
     const loadApps = () => {
         fetch('/api/apps')
@@ -68,10 +69,17 @@ const Aify = (props) => {
             .then(data => setWelcomeMessage(data))
     }
 
+    const loadUser = () => {
+        fetch('/api/user')
+            .then(r => r.json())
+            .then(user => setUser(user))
+    }
+
     useEffect(() => {
         loadApps();
         loadSessions();
         loadWelcomeMessage();
+        loadUser();
     }, [])
 
     const createSession = (appName) => {
@@ -171,6 +179,7 @@ const Aify = (props) => {
                         width="100%"
                         onMessageReceived={loadSessions}
                         icon={(appMap[currentAppName] && appMap[currentAppName]['icon_emoji']) ?? '🤖'}
+                        user={user}
                     />
                 ) : (
                     <div className='p-5'>

@@ -198,7 +198,7 @@ export const Chat = (props) => {
             className="p-0 bg-white"
         >
             <div id="history" className='mb-auto overflow-auto px-3'>
-                <MessageHistory history={history} icon={props.icon} />
+                <MessageHistory history={history} icon={props.icon} user={props.user}/>
                 <div>
                     {currentReply ? (
                         <Message role='ai' message={currentReply} />
@@ -251,11 +251,12 @@ const Message = (props) => {
                 <div style={{ width: '32px' }}>
                     <Avatar
                         style={{
-                            backgroundColor: props.role === 'user' ? '#f56a00' : '#eee',
+                            color: '#666',
+                            backgroundColor: props.role === 'user' ? '#eee' : '#eee',
                             verticalAlign: 'middle',
                         }}
                     >
-                        {props.role === 'user' ? 'Human' : props.icon ?? 'AI'}
+                        {props.role === 'user' ? (props.user && props.user.username) ? props.user.username.substring(0,2) : '🦤' : props.icon ?? 'AI'}
                     </Avatar>
                 </div>
                 <div className='card mx-3 border-0'
@@ -279,7 +280,7 @@ const MessageHistory = (props) => {
         <div>
             {Object.keys(props.history).map((k, i) => {
                 let h = props.history[i];
-                return <Message role={h.role} message={h.message} key={i} icon={props.icon} />;
+                return <Message role={h.role} message={h.message} key={i} icon={props.icon} user={props.user}/>;
             })}
         </div>
     );

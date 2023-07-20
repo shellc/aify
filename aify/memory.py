@@ -1,6 +1,7 @@
 import os
 import glob
 import json
+from typing import List, Dict
 from ._env import apps_dir
 
 def _memories_dirs():
@@ -10,7 +11,7 @@ def _memories_dirs():
 
     return memories_dir
 
-def save(program_name:str, session_id: str, role: str, content: str):
+def save(program_name:str, session_id: str, role: str, content: str) -> None:
     """Save memory for the specified session of the application."""
 
     prog_session_dir = os.path.join(_memories_dirs(), program_name)
@@ -24,7 +25,7 @@ def save(program_name:str, session_id: str, role: str, content: str):
         }))
         f.write('\n')
 
-def read(program_name: str, session_id: str, n = 10, max_len = 4096):
+def read(program_name: str, session_id: str, n = 10, max_len = 4096) -> List[Dict]:
     """Read memories from the specified session of the application."""
     fname = os.path.join(_memories_dirs(), program_name, session_id)
     if not os.path.exists(fname):
@@ -48,7 +49,7 @@ def read(program_name: str, session_id: str, n = 10, max_len = 4096):
             pass
     return memories
 
-def sessions(program_name: str):
+def sessions(program_name: str) -> List[Dict]:
     """Get the session list of the specified application."""
     res = []
     for f in glob.glob(os.path.join(_memories_dirs(), program_name, "*")):

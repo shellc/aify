@@ -13,8 +13,8 @@ model:
   #  api_key: sk-
   #  api_base: https://
 
-#modules:
-#  helpers: helpers
+modules:
+  memory: $AIFY_MEMORY_STORAGE
 
 prompt: |
   {{#system~}}

@@ -7,6 +7,8 @@ model:
   type: llm
   vendor: openai
   name: gpt-3.5-turbo
+modules:
+  memory: $AIFY_MEMORY_STORAGE
 prompt: |
   {{#system~}}
   You are a helpful and terse assistant.

@@ -3,6 +3,7 @@ import sys
 import glob
 import yaml
 import importlib
+from string import Template
 try:
     from yaml import CLoader as Loader, CDumper as Dumper
 except:
@@ -38,7 +39,10 @@ class Program:
 
     def _compile(self, template: str):
         try:
-            self._template = yaml.load(template, Loader=Loader)
+            # replace env variables
+            t = Template(template=template)
+            t = t.substitute(os.environ)
+            self._template = yaml.load(t, Loader=Loader)
         except Exception as e:
             raise ValueError(f"parse template faild, {e}")
 

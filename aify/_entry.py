@@ -164,7 +164,6 @@ async def auth(request: Request):
     response = await render('auth.html')(request=request)
     if request.method == 'POST':
         next = request.query_params.get('next')
-        print(next)
         if next:
             response = RedirectResponse(next, status_code=302)
         
@@ -172,6 +171,15 @@ async def auth(request: Request):
             token = form.get('token')
             response.set_cookie('token', token, max_age=7*24*3600)
     return response
+
+@api.get('/user')
+@requires(['authenticated'])
+async def get_user(request: Request):
+    user = {
+        'username': request.user.username,
+        "permissions": request.user.permissions
+    }
+    return JSONResponse(user)
 
 # Routes
 routes = [
@@ -216,3 +224,8 @@ async def lifespan(app):
     yield
 
 entry = Starlette(debug=True, routes=routes, middleware=middleware, lifespan=lifespan)
+
+env_file = os.path.join(_env.apps_dir(), '.env')
+if os.path.exists(env_file):
+        from dotenv import load_dotenv
+        load_dotenv(env_file)

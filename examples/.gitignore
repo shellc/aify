@@ -2,3 +2,5 @@ dataset
 embeddings
 memories
 .tokens
+.gcloudignore
+requirements.txt
