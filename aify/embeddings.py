@@ -1,5 +1,4 @@
 import os
-import json
 import pandas as pd
 import numpy as np
 
@@ -7,12 +6,12 @@ from . import embeddings_openai
 from . import _env
 
 
-def embed(text: str):
+def embed(text: str, max_length=None):
     """Genereate embeddings.
 
     Only OpenAI is currently supported.
     """
-    return embeddings_openai.embed(text=text)
+    return embeddings_openai.embed(text=text if not max_length else text[:max_length])
 
 
 def cosine_similarity(a, b):
@@ -47,8 +46,11 @@ _embeds = {}
 def _load_collections(name: str):
     global _embeds
     if name not in _embeds:
-        df = pd.read_csv(os.path.join(
-            _env.apps_dir(), 'embeddings', f'{name}.csv'))
+        csv_file = os.path.join(_env.apps_dir(), 'embeddings', f'{name}.csv')
+        if os.path.exists(f"{csv_file}.gz"):
+            csv_file = f"{csv_file}.gz"
+
+        df = pd.read_csv(csv_file)
         df['embedding'] = df['embedding'].apply(eval).apply(np.array)
         _embeds[name] = df
     return _embeds[name]
