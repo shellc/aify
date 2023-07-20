@@ -13,11 +13,15 @@
 * [microsoft/guidance](https://github.com/microsoft/guidance) as the core prompt engine
 * [Uvicorn](https://www.uvicorn.org/), [Starlette](https://www.starlette.io/), [FastAPI](https://fastapi.tiangolo.com/) as the server
 
-**Roadmap**
+**Features**
 
-* API documentation
-* Authorization
-* Deploy to cloud providers
+* Models: The LLMs/transformers models supported by guidance.
+* Memory storage: Local file / Google Cloud Datastore / User-defined
+* Embeddings: OpenAI / User-defined
+* Vector storage and search: Local CSV files, Pandas DataFrame and Numpy in memory / User-defined
+* Deployment: Local / Google Cloud App engine
+* UI: Chatbot webui
+* API: RESTful API / Python
 
 ## Getting started
 

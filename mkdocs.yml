@@ -20,3 +20,5 @@ nav:
   - Examples:
     - examples/llm_generation.md
     - examples/chatbot.md
+  - 'Deploy to Clouds':
+    - deploy_to_clouds/google_appengine.md

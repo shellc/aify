@@ -129,7 +129,7 @@ async def list_apps(request: Request):
     """List applications"""
     progs = []
     if len(_program.programs) == 0:
-        _program.reload()
+        _program.reload(skip_error=True)
 
     for name, prog in _program.programs.items():
         progs.append({
@@ -150,7 +150,7 @@ async def list_sessions(request: Request):
 
     progs = []
     if len(_program.programs) == 0:
-        _program.reload()
+        _program.reload(skip_error=True)
 
     for name, prog in _program.programs.items():
         memory = prog.modules.get('memory')

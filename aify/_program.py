@@ -172,6 +172,6 @@ def get(name: str):
     if name not in programs:
         apps_dir = _env.apps_dir()
         if os.path.exists(os.path.join(apps_dir, f'{name}.yml')) or os.path.exists(os.path.join(apps_dir, f'{name}.yaml')):
-            reload()
+            reload(skip_error=True)
 
     return programs.get(name)
