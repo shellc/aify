@@ -3,18 +3,18 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="shellc" /><link rel="canonical" href="https://aify.run/examples/llm_generate/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="shellc" /><link rel="canonical" href="https://aify.run/deploy_to_clouds/google_appengine/" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>LLM Generate - aify</title>
+    <title>Deploy to google app engine - aify</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "LLM Generate";
-        var mkdocs_page_input_path = "examples/llm_generate.md";
-        var mkdocs_page_url = "/examples/llm_generate/";
+        var mkdocs_page_name = "Deploy to google app engine";
+        var mkdocs_page_input_path = "deploy_to_clouds/google_appengine.md";
+        var mkdocs_page_url = "/deploy_to_clouds/google_appengine/";
       </script>
     
     <script src="../../js/jquery-3.6.0.min.js" defer></script>
@@ -69,12 +69,17 @@
                 </li>
               </ul>
               <p class="caption"><span class="caption-text">Examples</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../examples/llm_generation/">LLM Generation</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../examples/chatbot/">Chatbot</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Deploy to Clouds</span></p>
               <ul class="current">
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">LLM Generate</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Deploy to google app engine</a>
     <ul class="current">
     </ul>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../chatbot/">Chatbot</a>
                   </li>
               </ul>
       </div>
@@ -91,10 +96,10 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" aria-label="Docs"></a> &raquo;</li>
-          <li>Examples &raquo;</li>
-      <li>LLM Generate</li>
+          <li>Deploy to Clouds &raquo;</li>
+      <li>Deploy to google app engine</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/shellc/aify/blob/main/docs/examples/llm_generate.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/shellc/aify/blob/main/docs/deploy_to_clouds/google_appengine.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -102,14 +107,34 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="llm-generate">LLM Generate</h1>
-<p>Coming soon...</p>
+                <h1 id="deploy-to-google-app-engine">Deploy to google app engine</h1>
+<p>You need to install and configure your Google Cloud CLI before deploying your apps to Google Cloud Engine. <a href="https://cloud.google.com/sdk/docs/install">https://cloud.google.com/sdk/docs/install</a></p>
+<p>Examples: <a href="https://github.com/shellc/aify/tree/main/examples">https://github.com/shellc/aify/tree/main/examples</a></p>
+<pre><code>
+cd examples
+
+cp deploy-to-google-appengine/requirements.txt .
+
+gcloud app deploy --appyaml ./deploy-to-google-appengine/app.yaml
+
+</code></pre>
+<p>Make sure that the memory module in your app template is specified as <code>aify.memories.google_cloud_datastore</code>. You can also set it as an environment variable in the .env file.</p>
+<p>.env:</p>
+<pre><code class="language-bash">
+AIFY_MEMORY_STORAGE=aify.memories.google_cloud_datastore
+
+</code></pre>
+<p>your_app_template.yaml:</p>
+<pre><code>
+modules:
+  memory: $AIFY_MEMORY_STORAGE
+
+</code></pre>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../../rest_api/" class="btn btn-neutral float-left" title="RESTful API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../chatbot/" class="btn btn-neutral float-right" title="Chatbot">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../examples/chatbot/" class="btn btn-neutral float-left" title="Chatbot"><span class="icon icon-circle-arrow-left"></span> Previous</a>
     </div>
 
   <hr/>
@@ -136,10 +161,8 @@
         </span>
     
     
-      <span><a href="../../rest_api/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../../examples/chatbot/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
-    
-      <span><a href="../chatbot/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
