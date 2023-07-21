@@ -13,22 +13,40 @@ def embed(text: str, max_length=None):
     """
     return embeddings_openai.embed(text=text if not max_length else text[:max_length])
 
+async def aembed(text: str, max_length=None):
+    """Genereate embeddings.
+
+    Only OpenAI is currently supported.
+    """
+    return await embeddings_openai.aembed(text=text if not max_length else text[:max_length])
 
 def cosine_similarity(a, b):
     """This is the Cosine Similarity algorithm."""
     return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
 
-
-def search(collection_name: str, text: str, n=3):
-    """Searches the specified collection."""
+def _cal_score(collection_name, embeds, limit):
     df = _load_collections(collection_name).copy(deep=False)
-    embeds = embed(text)
+
     df['score'] = df['embedding'].apply(
         lambda x: cosine_similarity(x, embeds))
     res = df.sort_values('score', ascending=False).head(
-        n).drop(['embedding'], axis=1)
+        limit).drop(['embedding'], axis=1)
     #return res.values.todict()
     return res.to_json(orient="records", force_ascii=False, double_precision=4)
+
+def search(collection_name: str, text: str, n=3):
+    """Searches the specified collection."""
+    
+    embeds = embed(text)
+    
+    return _cal_score(collection_name=collection_name, embeds=embeds, limit=n)
+
+async def asearch(collection_name: str, text: str, n=3):
+    """Searches the specified collection."""
+    
+    embeds = await aembed(text)
+    
+    return _cal_score(collection_name=collection_name, embeds=embeds, limit=n)
 
 def build_csv(from_file: str, to_file: str):
     """Builds word embeddings for a CSV file"""
