@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 import importlib
 import contextlib
@@ -221,6 +222,7 @@ middleware = [
 ]
 
 def import_entry():
+    sys.path.append(_env.apps_dir())
     entry_py = os.path.join(_env.apps_dir(), 'entry.py')
     if os.path.exists(entry_py):
         importlib.import_module('entry')
