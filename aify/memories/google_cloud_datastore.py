@@ -30,8 +30,12 @@ def save(program_name: str, session_id: str, role: str, content: str) -> None:
     datastore_client.put(entity)
 
     session_key = datastore_client.key(
-        'sessions', program_name, 'session_id', session_id)
-    session_entity = datastore.Entity(key=session_key)
+        'sessions', program_name, 'session_id', session_id
+        )
+    session_entity = datastore.Entity(
+        key=session_key,
+        exclude_from_indexes=("content",)
+        )
     session_entity.update(m)
     session_entity.update({
         'program_name': program_name,
