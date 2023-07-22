@@ -10,6 +10,7 @@ theme:
   navigation_depth: 2
   analytics:
     gtag: G-3QEZ4BHZYC
+  custom_dir: docs/customized/
 
 nav:
   - getting_started.md
