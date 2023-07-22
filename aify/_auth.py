@@ -62,13 +62,17 @@ class BasicAuthBackend(AuthenticationBackend):
             return AuthCredentials(scopes=['authenticated', 'write']), AuthenticatedUser()
 
         token = None
-        if "Authorization" in request.headers:
+        if 'token' in request.query_params:
+            token = request.query_params.get('token')
+
+        if not token and "Authorization" in request.headers:
             auth = request.headers["Authorization"]
 
             scheme, token_str = auth.split()
             if scheme.lower() == 'bearer':
                 token = token_str
-        else:
+
+        if not token:
             token = request.cookies.get('token')
 
         if token:
