@@ -1,4 +1,5 @@
-__version__ = '0.1.10'
+__version__ = '0.1.11'
 
+from ._logging import logger
 from ._entry import entry, api
 from ._web_template import apps_render as render

@@ -60,15 +60,36 @@ def build_csv(from_file: str, to_file: str):
 
 _embeds = {}
 
+def _load_csv_file(name: str):
+    csv_file = os.path.join(_env.apps_dir(), 'embeddings', f'{name}.csv')
+    if os.path.exists(f"{csv_file}.gz"):
+        csv_file = f"{csv_file}.gz"
+    elif not os.path.exists(csv_file):
+        return
+
+    df = pd.read_csv(csv_file)
+    df['embedding'] = df['embedding'].apply(eval).apply(np.array)
+
+    return df
+
+def _load_pickle_file(name: str):
+    pickle_file = os.path.join(_env.apps_dir(), 'embeddings', f'{name}.pkl')
+    if os.path.exists(f"{pickle_file}.gz"):
+        pickle_file = f"{pickle_file}.gz"
+    elif not os.path.exists(pickle_file):
+        return
+
+    df = pd.read_pickle(pickle_file)
+
+    return df
 
 def _load_collections(name: str):
     global _embeds
     if name not in _embeds:
-        csv_file = os.path.join(_env.apps_dir(), 'embeddings', f'{name}.csv')
-        if os.path.exists(f"{csv_file}.gz"):
-            csv_file = f"{csv_file}.gz"
+        df = _load_pickle_file(name=name)
+        if df is None:
+            df = _load_csv_file(name=name)
 
-        df = pd.read_csv(csv_file)
-        df['embedding'] = df['embedding'].apply(eval).apply(np.array)
-        _embeds[name] = df
-    return _embeds[name]
+        if df is not None:
+            _embeds[name] = df
+    return _embeds.get(name)
