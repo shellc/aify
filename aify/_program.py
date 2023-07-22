@@ -156,13 +156,12 @@ def reload(apps_dir: str = None, skip_error=False):
         template = _load_template(f)
         try:
             program = Program(template=template)
+            programs[os.path.basename(f).split('.')[0]] = program
         except Exception as e:
             if not skip_error:
                 raise e
             else:
                 logger.warn(f"Compile program error: {e}")
-
-        programs[os.path.basename(f).split('.')[0]] = program
     return programs
 
 
