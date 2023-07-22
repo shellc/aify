@@ -22,7 +22,10 @@
       <script src="../js/html5shiv.min.js"></script>
     <![endif]-->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script> 
+      <script>hljs.initHighlightingOnLoad();</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8714127133780542"
+      crossorigin="anonymous"></script>
+
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-3QEZ4BHZYC"></script>
       <script>
         window.dataLayer = window.dataLayer || [];
@@ -67,6 +70,16 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="./">RESTful API</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#execute-program">Execute program</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#get-memories">Get memories</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#list-apps">List apps</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#list-sessions">List sessions</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#get-user">Get user</a>
+    </li>
     </ul>
                 </li>
               </ul>
@@ -108,6 +121,21 @@
               
                 <h1 id="restful-api">RESTful API</h1>
 <p>Coming soon...</p>
+<h2 id="execute-program">Execute program</h2>
+<pre><code>PUT /api/apps/{program_name}/{session_id}
+</code></pre>
+<h2 id="get-memories">Get memories</h2>
+<pre><code>GET /api/apps/{program_name}/{session_id}/memories
+</code></pre>
+<h2 id="list-apps">List apps</h2>
+<pre><code>GET /api/apps
+</code></pre>
+<h2 id="list-sessions">List sessions</h2>
+<pre><code>GET /api/sessions
+</code></pre>
+<h2 id="get-user">Get user</h2>
+<pre><code>GET /api/user
+</code></pre>
               
             </div>
           </div><footer>

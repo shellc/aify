@@ -2,47 +2,47 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://aify.run/</loc>
-         <lastmod>2023-07-20</lastmod>
+         <lastmod>2023-07-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://aify.run/app_template/</loc>
-         <lastmod>2023-07-20</lastmod>
+         <lastmod>2023-07-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://aify.run/dive_into_apps/</loc>
-         <lastmod>2023-07-20</lastmod>
+         <lastmod>2023-07-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://aify.run/enhance_with_python/</loc>
-         <lastmod>2023-07-20</lastmod>
+         <lastmod>2023-07-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://aify.run/getting_started/</loc>
-         <lastmod>2023-07-20</lastmod>
+         <lastmod>2023-07-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://aify.run/rest_api/</loc>
-         <lastmod>2023-07-20</lastmod>
+         <lastmod>2023-07-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://aify.run/deploy_to_clouds/google_appengine/</loc>
-         <lastmod>2023-07-20</lastmod>
+         <lastmod>2023-07-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://aify.run/examples/chatbot/</loc>
-         <lastmod>2023-07-20</lastmod>
+         <lastmod>2023-07-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://aify.run/examples/llm_generation/</loc>
-         <lastmod>2023-07-20</lastmod>
+         <lastmod>2023-07-22</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>

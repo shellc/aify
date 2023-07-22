@@ -22,7 +22,10 @@
       <script src="../js/html5shiv.min.js"></script>
     <![endif]-->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-      <script>hljs.initHighlightingOnLoad();</script> 
+      <script>hljs.initHighlightingOnLoad();</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8714127133780542"
+      crossorigin="anonymous"></script>
+
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-3QEZ4BHZYC"></script>
       <script>
         window.dataLayer = window.dataLayer || [];
@@ -59,6 +62,16 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="./">App template</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#application-description">Application description</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#model">Model</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#modules">Modules</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#prompt">Prompt</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#variables">Variables</a>
+    </li>
     </ul>
                 </li>
               </ul>
@@ -106,8 +119,89 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="app-template">App template</h1>
-<p>Coming soon...</p>
+                <h1 id="app-template"># App template</h1>
+<p>Aify uses YAML files to define applications. Applications are reusable, and we also call YAML-formatted applications templates. Template files consist of the following parts:</p>
+<ul>
+<li>Application descriptions</li>
+<li>Model settings </li>
+<li>Modules </li>
+<li>Prompt </li>
+<li>Variables </li>
+</ul>
+<h2 id="application-description">Application description</h2>
+<p>The application description contains attribute fields used to explain basic information about the application:</p>
+<ul>
+<li><code>title</code>: The title of the application, used for display and identification in the interface </li>
+<li><code>description</code>: A text that explains the functionality of the application, generally not too long. The built-in chatbot in Aify will display this text on the application list card, not required </li>
+<li><code>version</code>: Used to indicate the current version of the application, not required </li>
+<li><code>author</code>: The author of the application, not required </li>
+<li><code>website</code>: The website of the application author, not required </li>
+<li><code>email</code>: The author's email, not required </li>
+<li><code>license</code>: The open-source license of the author, not required </li>
+</ul>
+<h2 id="model">Model</h2>
+<p>The model specifies the AI model used by the application, mainly LLMs and Transformers models. An example of model settings is as follows:</p>
+<pre><code>model: 
+    type: llm 
+    vendor: openai 
+    name: gpt-3.5-turbo 
+    params: 
+        api_key: sk-xxxxx
+</code></pre>
+<p>Supported model list:</p>
+<ul>
+<li>openai <ul>
+<li>llm <ul>
+<li>models: <ul>
+<li>gpt-3.5-turbo* </li>
+<li>gpt-4* </li>
+</ul>
+</li>
+<li>params: <ul>
+<li>api_key </li>
+<li>api_base </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="modules">Modules</h2>
+<p>Modules are Python modules loaded during the runtime of the application, which can extend the capabilities of the application. For example:</p>
+<pre><code>modules: 
+    memory: $AIFY_MEMORY_STORAGE 
+    my_memory_storate: my.memory_storage 
+    helpers: helpers 
+</code></pre>
+<p>Several things happen here:</p>
+<ol>
+<li>We override the default memory implementation with the value represented by the environment variable AIFY_MEMORY_STORAGE. </li>
+<li>We define our own my.memory_storage module, using our own backend storage to store memories. </li>
+<li>We define the helpers module, which contains some useful functions. </li>
+</ol>
+<p>The modules defined here can be called during the runtime of the application.</p>
+<h2 id="prompt">Prompt</h2>
+<p>The prompt defines the flow of the program. Since Aify uses guidance as the engine, the definition and format of this part are completely the same as guidance. We include the prompt definition in our application template to make it part of our application. The benefit is that we can directly call extension modules in the prompt to enhance the program's capabilities.</p>
+<p>The prompt template syntax of guidance is Handlebars. For details about guidance and Handlebars, please refer to their documentation:</p>
+<ul>
+<li>Handlebars template syntax: <a href="https://handlebarsjs.com/">https://handlebarsjs.com/</a></li>
+<li>guidance extension functions: <a href="https://guidance.readthedocs.io/en/latest/api.html#program-creation-a-k-a-guidance-program-string">https://guidance.readthedocs.io/en/latest/api.html#program-creation-a-k-a-guidance-program-string</a> </li>
+</ul>
+<h2 id="variables">Variables</h2>
+<p>Variables define the input and output of the application, making it easier for higher-level applications to handle and interact with the application. The RESTful API and built-in chatbot only output the defined variables.</p>
+<p>The format for defining variables is as follows:</p>
+<pre><code>variables:
+    - name: prompt 
+      type: input 
+      data_type: string 
+      required: true
+    - name: answer 
+      type: output 
+      data_type: string 
+      required: true 
+</code></pre>
+<p>These definitions can be retrieved through the API for higher-level applications to customize the interface.</p>
               
             </div>
           </div><footer>
