@@ -63,6 +63,8 @@ class Program:
             else:
                 raise ValueError(
                     f"the model vendor `{model_settings['vendor']}` is not support yet.")
+        elif model_settings['type'] == 'transformers':
+            model = guidance.llms.Transformers(model=model_name, **model_params)
         else:
             raise ValueError(
                 f"the model type `{model_settings['type']}` is not support yet.")

@@ -1,0 +1,47 @@
+title: LLMA Chatbot
+description: LLMA-2-7b
+version: 1.0
+author: shellc
+website: https://aify.run
+email: shenggong.wang@gmail.com
+
+model:
+  type: transformers
+  name: meta-llama/Llama-2-7b-chat-hf
+
+modules:
+  memory: $AIFY_MEMORY_STORAGE
+
+prompt: |
+  {{#system~}}
+  You are a helpful and terse assistant.
+  {{~/system}}
+
+  {{#each (memory.read program_name session_id n=3)}}
+  {{~#if this.role == 'user'}}
+  {{#user~}}
+  {{this.content}}
+  {{~/user}}
+  {{/if~}}
+  {{~#if this.role == 'assistant'}}
+  {{#assistant~}}
+  {{this.content}}
+  {{~/assistant}}
+  {{/if~}}
+  {{~/each}}
+
+  {{#user~}}
+  {{prompt}}
+  {{memory.save program_name session_id 'user' prompt}}
+  {{~/user}}
+
+  {{#assistant~}}
+  {{gen 'answer' temperature=0 max_tokens=2000}}
+  {{memory.save program_name session_id 'assistant' answer}}
+  {{~/assistant}}
+
+variables:
+  - name: prompt
+    type: input
+  - name: answer
+    type: output
