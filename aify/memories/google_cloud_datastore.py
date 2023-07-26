@@ -48,11 +48,11 @@ def save(program_name: str, session_id: str, role: str, content: str) -> None:
 def read(program_name: str, session_id: str, n=10, max_len=4096) -> List[Dict]:
     query = datastore_client.query(
         kind='session_memories', ancestor=datastore_client.key('memories', f'{program_name}_{session_id}'))
-    query.order = ["created"]
+    query.order = ["-created"]
 
     memories = [x for x in query.fetch(limit=n)]
 
-    return memories
+    return memories[::-1]
 
 
 def sessions(program_name: str) -> List[Dict]:
