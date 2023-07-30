@@ -6,18 +6,28 @@ from . import embeddings_openai
 from . import _env
 
 
-def embed(text: str, max_length=None):
+def embed(text: str, max_length=None, vendor=None, model_name=None):
+    """Genereate embeddings.
+    """
+    text = text if not max_length else text[:max_length]
+
+    if vendor == 'sentence-transformers':
+        from . import embeddings_sentence_transformers
+        return embeddings_sentence_transformers.embed(text=text, model=model_name)
+
+    return embeddings_openai.embed(text=text)
+
+async def aembed(text: str, max_length=None, vendor=None, model_name=None):
     """Genereate embeddings.
 
     Only OpenAI is currently supported.
     """
-    return embeddings_openai.embed(text=text if not max_length else text[:max_length])
+    text = text if not max_length else text[:max_length]
+    
+    if vendor == 'sentence-transformers':
+        from . import embeddings_sentence_transformers
+        return await embeddings_sentence_transformers.aembed(text=text, model=model_name)
 
-async def aembed(text: str, max_length=None):
-    """Genereate embeddings.
-
-    Only OpenAI is currently supported.
-    """
     return await embeddings_openai.aembed(text=text if not max_length else text[:max_length])
 
 def cosine_similarity(a, b):
@@ -34,28 +44,28 @@ def _cal_score(collection_name, embeds, limit):
     #return res.values.todict()
     return res.to_json(orient="records", force_ascii=False, double_precision=4)
 
-def search(collection_name: str, text: str, n=3):
+def search(collection_name: str, text: str, n=3, vendor=None, model_name=None):
     """Searches the specified collection."""
     
-    embeds = embed(text)
+    embeds = embed(text, vendor=vendor, model_name=model_name)
     
     return _cal_score(collection_name=collection_name, embeds=embeds, limit=n)
 
-async def asearch(collection_name: str, text: str, n=3):
+async def asearch(collection_name: str, text: str, n=3, vendor=None, model_name=None):
     """Searches the specified collection."""
     
-    embeds = await aembed(text)
+    embeds = await aembed(text, vendor=vendor, model_name=model_name)
     
     return _cal_score(collection_name=collection_name, embeds=embeds, limit=n)
 
-def build_csv(from_file: str, to_file: str):
+def build_csv(from_file: str, to_file: str, vendor=None, model_name=None):
     """Builds word embeddings for a CSV file"""
     try:
         df = pd.read_csv(from_file)
-        df['embedding'] = df.apply(lambda x: embed(x.to_string()), axis=1)
+        df['embedding'] = df.apply(lambda x: embed(x.to_string(), vendor=vendor, model_name=model_name), axis=1)
         df.to_csv(to_file, index=False)
     except Exception as e:
-        print(e)
+        raise e
 
 
 _embeds = {}

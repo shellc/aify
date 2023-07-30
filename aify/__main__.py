@@ -74,8 +74,12 @@ parser_embed = subparser.add_parser(
 parser_embed.add_argument("from_csv_file", help="read data from this CSV file")
 parser_embed.add_argument(
     "to_csv_file", help="write embeddings to this CSV file")
+parser_embed.add_argument('--vendor', default=None,
+                          help="specify the model vendor name, default is openai, options: openai, sentence-transforers",)
+parser_embed.add_argument('--model-name', default=None,
+                          help="speicify the model name")
 parser_embed.set_defaults(func=lambda args: aify.embeddings.build_csv(
-    args.from_csv_file, args.to_csv_file))
+    args.from_csv_file, args.to_csv_file, vendor=args.vendor, model_name=args.model_name))
 
 
 def main():
