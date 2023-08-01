@@ -32,6 +32,8 @@ def get_program(name: str) -> _program.Program:
     program = None
     try:
         program = _program.get(name)
+        if not program:
+            raise ValueError()
     except Exception as e:
         logger.error(e, exc_info=e)
         raise HTTPException(
@@ -139,6 +141,8 @@ async def list_apps(request: Request):
             'title': prog.template.get('title'),
             'description': prog.template.get('description'),
             'icon_emoji': prog.template.get('icon_emoji'),
+            'is_public': prog.template.get('is_public'),
+            'variables': prog.template.get('variables')
         })
     
     return JSONResponse(progs)

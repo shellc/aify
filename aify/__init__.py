@@ -1,4 +1,4 @@
-__version__ = '0.1.17'
+__version__ = '0.1.18'
 
 from ._logging import logger
 from ._entry import entry, api
