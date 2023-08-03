@@ -3,6 +3,7 @@ import sys
 import json
 import importlib
 import contextlib
+import hashlib
 from starlette.applications import Starlette
 from starlette.routing import Mount, Route
 from starlette.staticfiles import StaticFiles
@@ -40,6 +41,20 @@ def get_program(name: str) -> _program.Program:
             status_code=404, detail=f"Not a valid app: {e}")
     return program
 
+def _validate_sessions_id(sessions_id:str, request: Request):
+    if sessions_id.startswith('p-'):
+        auth_header = request.headers.get("Authorization")
+        if not auth_header:
+            raise HTTPException(status_code=403, detail="Forbidden")
+
+        token = "".join(auth_header.split(' ')[-1:])
+        token_hash = hashlib.sha256(token.encode('utf-8')).hexdigest()
+
+        ss = "".join(sessions_id.split('-')[1:2])
+
+        if token_hash != ss:
+            raise HTTPException(status_code=403, detail="Forbidden")
+
 @api.put('/apps/{name}/{session_id}')
 @requires(['authenticated', 'write'])
 async def execute_program(request: Request, name: str, session_id: str):
@@ -52,6 +67,8 @@ async def execute_program(request: Request, name: str, session_id: str):
     except Exception as e:
         raise HTTPException(status_code=400, detail="Bad request body.")
     
+    _validate_sessions_id(sessions_id=session_id, request=request)
+
     kwargs['program_name'] = name
     kwargs['session_id'] = session_id
 
@@ -118,6 +135,8 @@ async def execute_program(request: Request, name: str, session_id: str):
 @requires(['authenticated'])
 async def get_memories(request: Request, name: str, session_id: str, limit=1000):
     """Get the memory content of the specified application's current session."""
+    _validate_sessions_id(sessions_id=session_id, request=request)
+
     memories = []
     program = get_program(name)
     memory = program.modules.get('memory')
