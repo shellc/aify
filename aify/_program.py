@@ -3,6 +3,7 @@ import sys
 import glob
 import yaml
 import importlib
+from typing import Dict
 from string import Template
 try:
     from yaml import CLoader as Loader, CDumper as Dumper
@@ -95,7 +96,7 @@ class Program:
                 module = importlib.import_module(module_name)
                 self._modules[name] = module
             except Exception as e:
-                raise ValueError(f"moudle `{module_name}` not found")
+                raise ValueError(f"import moudle `{module_name}` failed, {e}")
 
         if 'memory' not in self._modules:
             import aify.memory
@@ -138,12 +139,13 @@ def _load_template(url: str):
     return template
 
 
-programs = {}
+_programs = {}
 
 
-def reload(apps_dir: str = None, skip_error=False):
+def _reload(apps_dir: str = None, skip_error=False):
     """Load programs from the user's application directory."""
-    global programs
+    global _programs
+    _programs = {}
 
     if not apps_dir:
         apps_dir = _env.apps_dir()
@@ -158,21 +160,24 @@ def reload(apps_dir: str = None, skip_error=False):
         template = _load_template(f)
         try:
             program = Program(template=template)
-            programs[os.path.basename(f).split('.')[0]] = program
+            _programs[os.path.basename(f).split('.')[0]] = program
         except Exception as e:
             if not skip_error:
                 raise e
             else:
                 logger.warn(f"Compile program error: {e}")
-    return programs
 
+def programs() -> Dict[str, Program]:
+    if len(_programs) == 0:
+        _reload(skip_error=True)
+    return _programs
 
 def get(name: str):
     """Retrieve a specific program from the user's application directory."""
-    global programs
-    if name not in programs:
+    global _programs
+    if name not in _programs:
         apps_dir = _env.apps_dir()
         if os.path.exists(os.path.join(apps_dir, f'{name}.yml')) or os.path.exists(os.path.join(apps_dir, f'{name}.yaml')):
-            reload(skip_error=True)
+            _reload(skip_error=True)
 
-    return programs.get(name)
+    return _programs.get(name)

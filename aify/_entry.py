@@ -132,10 +132,8 @@ async def get_memories(request: Request, name: str, session_id: str, limit=1000)
 async def list_apps(request: Request):
     """List applications"""
     progs = []
-    if len(_program.programs) == 0:
-        _program.reload(skip_error=True)
 
-    for name, prog in _program.programs.items():
+    for name, prog in _program.programs().items():
         progs.append({
             'name': name,
             'title': prog.template.get('title'),
@@ -155,10 +153,8 @@ async def list_sessions(request: Request):
     sessions = []
 
     progs = []
-    if len(_program.programs) == 0:
-        _program.reload(skip_error=True)
 
-    for name, prog in _program.programs.items():
+    for name, prog in _program.programs().items():
         memory = prog.modules.get('memory')
         sessions.extend(memory.sessions(name))
 
