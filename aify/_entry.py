@@ -60,7 +60,7 @@ def _validate_sessions_id(sessions_id:str, request: Request):
 async def execute_program(request: Request, name: str, session_id: str):
     """Execute the program identified by the name."""
     program = get_program(name)
-    
+
     kwargs = {}
     try:
         kwargs = await request.json()
@@ -129,7 +129,7 @@ async def execute_program(request: Request, name: str, session_id: str):
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Something wrong: {e}")
 
-    return StreamingResponse(it, headers={'Content-Type': content_type})
+    return StreamingResponse(it, headers={'Content-Type': content_type, 'X-Accel-Buffering': 'no'})
 
 @api.get('/apps/{name}/{session_id}/memories')
 @requires(['authenticated'])

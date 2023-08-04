@@ -40,7 +40,7 @@ def runserver(args):
                 h11_max_incomplete_event_size=0,
                 log_config=LOGGING_CONFIG,
                 reload_dirs=args.reload_dirs,
-                reload_includes="**/*.[py][ym]*"
+                reload_includes="**/*.[py][yam]*"
                 )
 
 
@@ -53,13 +53,13 @@ subparser = parser.add_subparsers(
 
 # run command
 parser_run = subparser.add_parser('run', help="run aify server")
-parser_run.add_argument('-H', '--host', default='127.0.0.1',
+parser_run.add_argument('-H', '--host', default='0.0.0.0',
                         help="bind socket to this host. default: 127.0.0.1")
 parser_run.add_argument('-p', '--port', default=2000,
                         type=int, help="bind socket to this port, default: 2000")
 parser_run.add_argument('-w', '--workers', default=1, type=int,
                         help="number of worker processes, default: 1")
-parser_run.add_argument('-r', '--reload', default=True,
+parser_run.add_argument('-r', '--reload', default=False,
                         action='store_true', help="enable auto-reload")
 parser_run.add_argument('--reload-dirs', default=None,
                         help="set reload directories explicitly, default is applications directory")
