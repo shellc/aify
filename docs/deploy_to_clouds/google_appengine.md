@@ -33,4 +33,7 @@ modules:
 
 ```
 
-Notice: Google Cloud App Engine does not support streaming responses, so aify does not either when it is deployed on Google Cloud App Engine. [https://cloud.google.com/appengine/docs/standard/how-requests-are-handled?tab=python#streaming_responses](https://cloud.google.com/appengine/docs/standard/how-requests-are-handled?tab=python#streaming_responses)
+Notice: Google Cloud App Engine does not support streaming responses, so aify does not either when it is deployed on Google Cloud App Engine. 
+
+* [https://cloud.google.com/appengine/docs/standard/how-requests-are-handled?tab=python#streaming_responses](https://cloud.google.com/appengine/docs/standard/how-requests-are-handled?tab=python#streaming_responses)
+* [https://cloud.google.com/appengine/docs/flexible/how-requests-are-handled?hl=zh-cn&tab=python#x-accel-buffering](https://cloud.google.com/appengine/docs/flexible/how-requests-are-handled?hl=zh-cn&tab=python#x-accel-buffering)

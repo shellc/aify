@@ -54,7 +54,7 @@ subparser = parser.add_subparsers(
 # run command
 parser_run = subparser.add_parser('run', help="run aify server")
 parser_run.add_argument('-H', '--host', default='0.0.0.0',
-                        help="bind socket to this host. default: 127.0.0.1")
+                        help="bind socket to this host. default: 0.0.0.0")
 parser_run.add_argument('-p', '--port', default=2000,
                         type=int, help="bind socket to this port, default: 2000")
 parser_run.add_argument('-w', '--workers', default=1, type=int,
