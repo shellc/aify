@@ -159,13 +159,14 @@ def _reload(apps_dir: str = None, skip_error=False):
     for f in files:
         template = _load_template(f)
         try:
+            program_name = os.path.basename(f).split('.')[0]
             program = Program(template=template)
-            _programs[os.path.basename(f).split('.')[0]] = program
+            _programs[program_name] = program
         except Exception as e:
             if not skip_error:
                 raise e
             else:
-                logger.warn(f"Compile program error: {e}")
+                logger.warn(f"Compile program ({program_name}) error: {e}")
 
 def programs() -> Dict[str, Program]:
     if len(_programs) == 0:

@@ -133,7 +133,7 @@ async def execute_program(request: Request, name: str, session_id: str):
 
 @api.get('/apps/{name}/{session_id}/memories')
 @requires(['authenticated'])
-async def get_memories(request: Request, name: str, session_id: str, limit=1000):
+async def get_memories(request: Request, name: str, session_id: str, limit: int=1000):
     """Get the memory content of the specified application's current session."""
     _validate_sessions_id(sessions_id=session_id, request=request)
 
