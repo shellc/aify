@@ -4,6 +4,7 @@ import json
 import importlib
 import contextlib
 import hashlib
+import datetime
 from starlette.applications import Starlette
 from starlette.routing import Mount, Route
 from starlette.staticfiles import StaticFiles
@@ -68,6 +69,12 @@ async def execute_program(request: Request, name: str, session_id: str):
         raise HTTPException(status_code=400, detail="Bad request body.")
     
     _validate_sessions_id(sessions_id=session_id, request=request)
+
+    # update user info
+    kwargs['user_info'] = json.dumps({
+        'language': request.headers.get('Accept-Language'),
+        'now': request.get('Date') if 'Date' in request.headers else datetime.datetime.now().isoformat()
+    })
 
     kwargs['program_name'] = name
     kwargs['session_id'] = session_id
