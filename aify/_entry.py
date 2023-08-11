@@ -73,7 +73,7 @@ async def execute_program(request: Request, name: str, session_id: str):
     # update user info
     kwargs['user_info'] = json.dumps({
         'language': request.headers.get('Accept-Language'),
-        'now': request.get('Date') if 'Date' in request.headers else datetime.datetime.now().isoformat()
+        'now': request.headers.get('Date') if 'Date' in request.headers else datetime.datetime.now().isoformat()
     })
 
     kwargs['program_name'] = name
