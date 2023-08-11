@@ -109,7 +109,9 @@ class Program:
     def run(self, **kwargs):
         """Run this program."""
         kwargs.update(self._modules)
-        return self._runner(**kwargs)
+        r = self._runner(**kwargs)
+        r.update_display.throttle_limit = 0
+        return r
 
     @property
     def modules(self):
